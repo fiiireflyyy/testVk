@@ -51,7 +51,7 @@ class ProductsAdapter:RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
         holder.onBind(productList[position])
         Glide.with(holder.itemView)
             .load(productList[position].thumbnail)
-            .placeholder(R.drawable.grey_bg)
+            .placeholder(R.drawable.white_bg)
             .error(R.drawable.circle_bg)
             .into(holder.mBinding.imageProduct)
     }

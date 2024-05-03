@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:id="@+id/item_product"
     android:gravity="center"
-    android:background="@drawable/white_bg">
+    android:background="@drawable/white_bg"
+    android:layout_margin="8dp">
 
     <ImageView
         android:id="@+id/image_product"
@@ -14,7 +15,6 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
-        android:background="@drawable/grey_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
