@@ -1,12 +1,12 @@
-package com.fenix.testvkwork
+package com.fenix.testvkwork.view.fragment
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import com.fenix.testvkwork.MainViewModel
 import com.fenix.testvkwork.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
