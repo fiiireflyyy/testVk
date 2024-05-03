@@ -13,7 +13,7 @@ class MainFragment : Fragment() {
 
     private val viewModel: MainViewModel by activityViewModels<MainViewModel>()
     private var _binding:FragmentMainBinding?=null
-    val mBinding get()=_binding!!
+    private val mBinding get()=_binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
