@@ -8,8 +8,16 @@ import com.fenix.testvkwork.model.Repository
 class MainViewModel : ViewModel() {
 
     private val repository=Repository()
-    fun testDownLoad(skip:Int, limit:Int){
+
+    private var skip=0
+    private val limit=20
+
+    fun getLastPos(): Int {
+        return skip-10
+    }
+    fun testDownLoad(){
         repository.testDownLoad(skip, limit)
+        skip+=20
     }
 
     fun getProductsLive(): MutableLiveData<ArrayList<Product>> {

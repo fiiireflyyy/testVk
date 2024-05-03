@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.fenix.testvkwork.R
 import com.fenix.testvkwork.databinding.ItemProductBinding
 import com.fenix.testvkwork.model.Product
@@ -48,6 +49,11 @@ class ProductsAdapter:RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.onBind(productList[position])
+        Glide.with(holder.itemView)
+            .load(productList[position].thumbnail)
+            .placeholder(R.drawable.grey_bg)
+            .error(R.drawable.circle_bg)
+            .into(holder.mBinding.imageProduct)
     }
 
 }
