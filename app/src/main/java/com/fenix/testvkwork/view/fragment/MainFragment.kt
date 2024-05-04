@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.fenix.testvkwork.R
 import com.fenix.testvkwork.viewModel.MainViewModel
 import com.fenix.testvkwork.databinding.FragmentMainBinding
 import com.fenix.testvkwork.view.FilterAdapter
@@ -71,7 +72,31 @@ class MainFragment : Fragment() {
             }
         )
 
+        viewModel.getCurrentCategoryLive().observe(
+            viewLifecycleOwner,
+        ){
+            category->mBinding.currentFilter.text=category
+        }
+        viewModel.getShowBtnCancelLive().observe(
+            viewLifecycleOwner,
+        ){
+            flag->
+            if (flag) {
+                mBinding.deleteFilterBtn.visibility=View.VISIBLE
+            }
+            else{
+                mBinding.deleteFilterBtn.visibility=View.GONE
+            }
+        }
 
+
+        mBinding.deleteFilterBtn.setOnClickListener {
+            viewModel.testDownLoad()
+            viewModel.setShowBtnCancel(false)
+            viewModel.setCurrentCategory("Выберите категорию")
+            filtersAdapter.reDrawOut()
+            viewModel.setScrollDownLoad(true)
+        }
 
         return mBinding.root
     }

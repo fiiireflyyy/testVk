@@ -20,6 +20,9 @@ class FilterAdapter(
             notifyDataSetChanged()
         }
 
+    private var currentCategoryHolder:ViewHolder?=null
+    private var currentPosition:Int?=null
+
 
     class ViewHolder(item: View):RecyclerView.ViewHolder(item){
 
@@ -29,9 +32,15 @@ class FilterAdapter(
         init {
             _binding=ItemFilterBinding.bind(item)
         }
-        private val filterText=mBinding.filterItem
-        fun onBind(items:String){
+        private val filterText=mBinding.chipText
+        fun onBind(items:String,position: Int,currentPosition:Int?,holder: ViewHolder){
             filterText.text=items
+            if (position!=currentPosition){
+                holder.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_bg)
+            }
+            else{
+                holder.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_on_bg)
+            }
         }
 
     }
@@ -44,21 +53,41 @@ class FilterAdapter(
     override fun getItemCount()=filterList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(filterList[position])
-//        holder.mBinding.filterItem.setOnClickListener {
-//            viewModel.downLoadCategory(filterList[position])
-//        }
-        holder.mBinding.filterItem.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (buttonView.isChecked){
+        holder.onBind(filterList[position],position,currentPosition,holder)
+        holder.mBinding.chipLayout.setOnClickListener {
+
+            if (currentCategoryHolder == holder && currentPosition==position){
+                viewModel.testDownLoad()
+                viewModel.setShowBtnCancel(false)
+                viewModel.setCurrentCategory("Выберите категорию")
+                holder.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_bg)
+                viewModel.setScrollDownLoad(true)
+                currentPosition=null
+                currentCategoryHolder=null
+            } else {
                 viewModel.downLoadCategory(filterList[position])
+                viewModel.setCurrentCategory(filterList[position])
+                viewModel.setShowBtnCancel(true)
+                reDrawOldButton(holder,position)
+                holder.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_on_bg)
                 viewModel.setScrollDownLoad(false)
             }
-            else{
-                viewModel.testDownLoad()
-                viewModel.setScrollDownLoad(true)
-            }
+
         }
     }
+
+    fun reDrawOut(){
+        currentCategoryHolder!!.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_bg)
+    }
+    fun reDrawOldButton(holder: ViewHolder,position:Int){
+        if (currentCategoryHolder != null){
+            currentCategoryHolder!!.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_bg)
+        }
+        currentCategoryHolder = holder
+        currentPosition=position
+    }
+
+
 
 
 }

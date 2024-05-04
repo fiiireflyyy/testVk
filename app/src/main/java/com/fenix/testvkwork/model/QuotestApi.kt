@@ -15,7 +15,4 @@ interface QuotestApi {
     @GET("/products/categories")
     suspend fun getFilters():ArrayList<String>
 
-
-    @GET("/products/category")
-    suspend fun getCategory(@Query("/")category:String):CategoryProduct
 }

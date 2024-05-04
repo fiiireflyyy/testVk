@@ -54,7 +54,7 @@
             android:id="@+id/category_text"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
@@ -63,18 +63,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/top_panel" />
 
-        <TextView
-            android:id="@+id/current_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:textColor="@color/blue_sky"
-            android:text="@string/show_all_cat"
-            app:layout_constraintBottom_toBottomOf="@+id/category_text"
-            app:layout_constraintStart_toEndOf="@+id/category_text"
-            app:layout_constraintTop_toBottomOf="@+id/top_panel" />
+    <TextView
+        android:id="@+id/current_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="Выберите категорию"
+        app:layout_constraintBottom_toBottomOf="@+id/category_text"
+        app:layout_constraintEnd_toStartOf="@+id/delete_filter_btn"
+        app:layout_constraintTop_toTopOf="@+id/category_text"
+        app:layout_constraintVertical_bias="1.0" />
 
-        <androidx.recyclerview.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/filters_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -105,11 +105,23 @@
             android:layout_marginTop="16dp"
             android:layout_marginHorizontal="8dp"
             android:background="@drawable/black_bg"
-            android:paddingBottom="260dp"
+            android:paddingBottom="272dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/product_text" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageButton
+        android:id="@+id/delete_filter_btn"
+        android:visibility="gone"
+        android:background="@drawable/white_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/baseline_cancel_24"
+        app:layout_constraintBottom_toBottomOf="@+id/current_filter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/current_filter" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
