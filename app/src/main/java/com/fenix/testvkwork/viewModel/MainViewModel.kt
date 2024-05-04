@@ -11,6 +11,14 @@ class MainViewModel : ViewModel() {
 
     private var skip=0
     private val limit=20
+    private var scrollDownLoad=true
+
+    fun getScrollDownLoad(): Boolean {
+        return scrollDownLoad
+    }
+    fun setScrollDownLoad(bool:Boolean){
+        scrollDownLoad=bool
+    }
 
     fun getLastPos(): Int {
         return skip-10

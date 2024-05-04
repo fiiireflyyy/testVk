@@ -51,9 +51,11 @@ class FilterAdapter(
         holder.mBinding.filterItem.setOnCheckedChangeListener { buttonView, isChecked ->
             if (buttonView.isChecked){
                 viewModel.downLoadCategory(filterList[position])
+                viewModel.setScrollDownLoad(false)
             }
             else{
                 viewModel.testDownLoad()
+                viewModel.setScrollDownLoad(true)
             }
         }
     }

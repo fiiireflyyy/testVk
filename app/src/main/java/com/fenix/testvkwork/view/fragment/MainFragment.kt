@@ -61,8 +61,10 @@ class MainFragment : Fragment() {
                         Log.d("RRR", "позиция $lastVisibleItemPosition")
 
                         if (lastVisibleItemPosition >= viewModel.getLastPos()) {
+                            if(viewModel.getScrollDownLoad()){
+                                viewModel.testDownLoad()
+                            }
                             Log.d("RRR", "ПРОКРУТИЛОСЬ")
-                            viewModel.testDownLoad()
                         }
                     }
                 }
