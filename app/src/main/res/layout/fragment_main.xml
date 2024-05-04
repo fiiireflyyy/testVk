@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.fragment.MainFragment">
@@ -65,7 +64,7 @@
             app:layout_constraintTop_toBottomOf="@+id/top_panel" />
 
         <TextView
-            android:id="@+id/see_all_text"
+            android:id="@+id/current_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -76,11 +75,11 @@
             app:layout_constraintTop_toBottomOf="@+id/top_panel" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/categories_recycler"
+            android:id="@+id/filters_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:clipToPadding="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,20 +95,21 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/categories_recycler" />
+            app:layout_constraintTop_toBottomOf="@+id/filters_recycler" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:clipToPadding="false"
             android:id="@+id/product_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_marginTop="16dp"
             android:layout_marginHorizontal="8dp"
-            android:background="@color/black"
+            android:background="@drawable/black_bg"
+            android:paddingBottom="260dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/product_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.core.widget.NestedScrollView>
+

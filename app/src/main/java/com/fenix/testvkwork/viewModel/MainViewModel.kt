@@ -1,4 +1,4 @@
-package com.fenix.testvkwork
+package com.fenix.testvkwork.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,8 +20,16 @@ class MainViewModel : ViewModel() {
         skip+=20
     }
 
+    fun downLoadFilters(){
+        repository.downLoadFilters()
+    }
+
     fun getProductsLive(): MutableLiveData<ArrayList<Product>> {
         return repository.getProductsLive()
+    }
+
+    fun getFiltersList(): MutableLiveData<ArrayList<String>> {
+        return repository.getFiltersList()
     }
 
 }
