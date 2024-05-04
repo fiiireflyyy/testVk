@@ -33,7 +33,7 @@ class MainFragment : Fragment() {
         viewModel.downLoadFilters()
         viewModel.testDownLoad()
 
-        filtersAdapter= FilterAdapter()
+        filtersAdapter= FilterAdapter(viewModel)
         mBinding.filtersRecycler.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         viewModel.getFiltersList().observe(
             viewLifecycleOwner,

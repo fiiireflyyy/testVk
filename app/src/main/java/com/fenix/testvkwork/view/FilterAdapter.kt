@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.fenix.testvkwork.R
 import com.fenix.testvkwork.databinding.ItemFilterBinding
+import com.fenix.testvkwork.viewModel.MainViewModel
 
-class FilterAdapter() : RecyclerView.Adapter<FilterAdapter.ViewHolder>() {
+class FilterAdapter(
+    val viewModel:MainViewModel
+) : RecyclerView.Adapter<FilterAdapter.ViewHolder>() {
 
     var filterList= listOf<String>()
         @SuppressLint("NotifyDataSetChanged")
@@ -43,6 +45,17 @@ class FilterAdapter() : RecyclerView.Adapter<FilterAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.onBind(filterList[position])
+//        holder.mBinding.filterItem.setOnClickListener {
+//            viewModel.downLoadCategory(filterList[position])
+//        }
+        holder.mBinding.filterItem.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (buttonView.isChecked){
+                viewModel.downLoadCategory(filterList[position])
+            }
+            else{
+                viewModel.testDownLoad()
+            }
+        }
     }
 
 

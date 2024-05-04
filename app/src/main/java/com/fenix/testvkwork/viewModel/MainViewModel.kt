@@ -24,6 +24,11 @@ class MainViewModel : ViewModel() {
         repository.downLoadFilters()
     }
 
+    fun downLoadCategory(category:String){
+        skip=0
+        repository.downLoadCategory(category, skip, limit)
+    }
+
     fun getProductsLive(): MutableLiveData<ArrayList<Product>> {
         return repository.getProductsLive()
     }
@@ -31,5 +36,7 @@ class MainViewModel : ViewModel() {
     fun getFiltersList(): MutableLiveData<ArrayList<String>> {
         return repository.getFiltersList()
     }
+
+
 
 }
