@@ -15,4 +15,6 @@ interface QuotestApi {
     @GET("/products/categories")
     suspend fun getFilters():ArrayList<String>
 
+    @GET("/products/search")
+    suspend fun getSearchProducts(@Query("q")query:String):Products
 }

@@ -63,13 +63,25 @@ class Repository {
             val products=quotestApi.getProducts(category)
             productsL=products.products
             productsLiveData.postValue(productsL)
-            if (products!=null)
-                Log.d("RRR",productsL[productsL.size-1].toString())
             skip=0
         } catch (e:Exception){
             toastError.postValue(true)
         }
 
+    }
+
+    suspend fun downLoadSearch(search:String){
+        try {
+            Log.d("RRR",search)
+            val products=quotestApi.getSearchProducts(search)
+            productsL=products.products
+
+            productsLiveData.postValue(productsL)
+            skip=0
+        }catch (e:Exception){
+            Log.d("RRR","ОШИБКА $e")
+            toastError.postValue(true)
+        }
     }
     fun getProductsLive(): MutableLiveData<ArrayList<Product>> {
         return productsLiveData

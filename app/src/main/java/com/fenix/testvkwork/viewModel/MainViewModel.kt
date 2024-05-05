@@ -65,6 +65,12 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    fun downLoadSearch(search:String){
+        viewModelScope.launch {
+            repository.downLoadSearch(search)
+        }
+    }
+
     fun getProductsLive(): MutableLiveData<ArrayList<Product>> {
         return repository.getProductsLive()
     }
