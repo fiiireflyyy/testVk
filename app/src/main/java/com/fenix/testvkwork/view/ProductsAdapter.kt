@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.fenix.testvkwork.R
 import com.fenix.testvkwork.databinding.ItemProductBinding
 import com.fenix.testvkwork.model.Product
@@ -51,6 +52,7 @@ class ProductsAdapter:RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
         holder.onBind(productList[position])
         Glide.with(holder.itemView)
             .load(productList[position].thumbnail)
+            .transform(RoundedCorners(20))
             .placeholder(R.drawable.white_bg)
             .error(R.drawable.circle_bg)
             .into(holder.mBinding.imageProduct)

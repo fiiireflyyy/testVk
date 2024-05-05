@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -87,6 +88,33 @@ class MainFragment : Fragment() {
             else{
                 mBinding.deleteFilterBtn.visibility=View.GONE
             }
+        }
+
+        viewModel.getErrorStateLive().observe(
+            viewLifecycleOwner,
+        ){
+            state->
+            if(state){
+                mBinding.errorLay.visibility=View.VISIBLE
+                mBinding.productRecycler.visibility=View.GONE
+            }else{
+                mBinding.productRecycler.visibility=View.VISIBLE
+                mBinding.errorLay.visibility=View.GONE
+            }
+        }
+
+        viewModel.getToastErrorLive().observe(
+            viewLifecycleOwner,
+        ){
+            flag->
+            if(flag)
+                Toast.makeText(context,"Отсутствует подключение к интернету",Toast.LENGTH_SHORT).show()
+        }
+
+
+        mBinding.updateBtn.setOnClickListener {
+            viewModel.downLoadFilters()
+            viewModel.testDownLoad()
         }
 
 

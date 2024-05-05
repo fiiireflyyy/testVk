@@ -12,13 +12,18 @@ class MainViewModel : ViewModel() {
 
     private val repository=Repository()
 
-    private var skip=0
-    private val limit=20
+
     private var scrollDownLoad=true
     private val currentCategory:MutableLiveData<String> by lazy { MutableLiveData<String>() }
     private val showBtnCancel:MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
 
+    fun getErrorStateLive(): MutableLiveData<Boolean> {
+        return repository.getErrorStateLive()
+    }
 
+    fun getToastErrorLive(): MutableLiveData<Boolean> {
+        return repository.getToastErrorLive()
+    }
     fun setShowBtnCancel(flag:Boolean){
         showBtnCancel.postValue(flag)
     }
@@ -40,12 +45,11 @@ class MainViewModel : ViewModel() {
     }
 
     fun getLastPos(): Int {
-        return skip-10
+        return repository.getLastPos()
     }
     fun testDownLoad(){
         viewModelScope.launch {
-            repository.testDownLoad(skip, limit)
-            skip+=20
+            repository.testDownLoad()
         }
     }
 
@@ -57,8 +61,7 @@ class MainViewModel : ViewModel() {
 
     fun downLoadCategory(category:String){
         viewModelScope.launch {
-            skip=0
-            repository.downLoadCategory(category, skip, limit)
+            repository.downLoadCategory(category)
         }
     }
 

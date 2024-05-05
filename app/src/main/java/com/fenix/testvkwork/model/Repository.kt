@@ -2,39 +2,74 @@ package com.fenix.testvkwork.model
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class Repository {
+
+    private var skip=0
+    private val limit=20
 
     private val productsLiveData:MutableLiveData<ArrayList<Product>> by lazy { MutableLiveData<ArrayList<Product>>() }
     private var productsL=ArrayList<Product>()
     private val filtersLiveData:MutableLiveData<ArrayList<String>> by lazy {MutableLiveData<ArrayList<String>>()}
     private val quotestApi=RetrofitHelper.getInstance().create(QuotestApi::class.java)
+    private val errorState:MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>()}
+    private val toastError:MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
 
 
-    suspend fun testDownLoad(skip:Int, limit:Int){
-            val products=quotestApi.getProducts(skip,limit)
-            if(skip!=0) {
+    fun getLastPos():Int{
+        return skip-10
+    }
+    fun getErrorStateLive(): MutableLiveData<Boolean> {
+        return errorState
+    }
+
+    fun getToastErrorLive(): MutableLiveData<Boolean> {
+        return toastError
+    }
+    suspend fun testDownLoad(){
+        try {
+            skip+=20
+            val products=quotestApi.getProducts(skip-20,limit)
+            if(skip-20!=0) {
                 productsL+=products.products
             } else productsL=products.products
             productsLiveData.postValue(productsL)
             if (products!=null)
                 Log.d("RRR",productsL[productsL.size-1].toString())
+            Log.d("RRR","Скип $skip")
+        } catch (e: Exception){
+            skip-=20
+            toastError.postValue(true)
+            Log.d("RRR","Ошибка поймана загрузка")
+        }
+
     }
 
     suspend fun downLoadFilters(){
+        try {
+            errorState.postValue(false)
             val filters=quotestApi.getFilters()
             filtersLiveData.postValue(filters)
+        } catch (e:Exception){
+            Log.d("RRR","ОШибка категорий")
+            errorState.postValue(true)
+        }
+
     }
 
-    suspend fun downLoadCategory(category:String,skip:Int, limit:Int){
+    suspend fun downLoadCategory(category:String){
+        try {
             Log.d("RRR",category)
             val products=quotestApi.getProducts(category)
             productsL=products.products
             productsLiveData.postValue(productsL)
             if (products!=null)
                 Log.d("RRR",productsL[productsL.size-1].toString())
+            skip=0
+        } catch (e:Exception){
+            toastError.postValue(true)
+        }
+
     }
     fun getProductsLive(): MutableLiveData<ArrayList<Product>> {
         return productsLiveData

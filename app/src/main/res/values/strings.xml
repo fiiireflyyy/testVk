@@ -6,4 +6,5 @@
     <string name="show_all_cat">Показать все</string>
     <string name="product_txt">Товары</string>
     <string name="remain_txt">шт.</string>
+    <string name="error_text"><![CDATA[Отсутствует соединение с интернетом, нажмите кнопку <обновить> когда подключитесь к сети]]></string>
 </resources>
