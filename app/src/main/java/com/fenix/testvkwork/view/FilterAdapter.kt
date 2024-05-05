@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fenix.testvkwork.R
 import com.fenix.testvkwork.databinding.ItemFilterBinding
+import com.fenix.testvkwork.model.WhatDownLoad
 import com.fenix.testvkwork.viewModel.MainViewModel
 
 class FilterAdapter(
@@ -57,20 +58,21 @@ class FilterAdapter(
         holder.mBinding.chipLayout.setOnClickListener {
 
             if (currentCategoryHolder == holder && currentPosition==position){
-                viewModel.testDownLoad()
+                viewModel.testDownLoad(false)
                 viewModel.setShowBtnCancel(false)
                 viewModel.setCurrentCategory("Выберите категорию")
                 holder.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_bg)
-                viewModel.setScrollDownLoad(true)
+                viewModel.setScrollDownLoad(WhatDownLoad.MAIN)
                 currentPosition=null
                 currentCategoryHolder=null
             } else {
-                viewModel.downLoadCategory(filterList[position])
+                viewModel.category=filterList[position]
                 viewModel.setCurrentCategory(filterList[position])
+                viewModel.downLoadCategory(false)
                 viewModel.setShowBtnCancel(true)
                 reDrawOldButton(holder,position)
                 holder.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_on_bg)
-                viewModel.setScrollDownLoad(false)
+                viewModel.setScrollDownLoad(WhatDownLoad.CATEGORY)
             }
 
         }
