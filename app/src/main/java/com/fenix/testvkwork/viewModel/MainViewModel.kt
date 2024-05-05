@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fenix.testvkwork.model.Product
 import com.fenix.testvkwork.model.Repository
+import com.fenix.testvkwork.model.WhatDownLoad
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.launch
 
@@ -13,10 +14,14 @@ class MainViewModel : ViewModel() {
     private val repository=Repository()
 
 
-    private var scrollDownLoad=true
+    private var searchQuery:String?=null
+    var category=""
     private val currentCategory:MutableLiveData<String> by lazy { MutableLiveData<String>() }
     private val showBtnCancel:MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
 
+    fun setSearch(search:String){
+        searchQuery = search
+    }
     fun getErrorStateLive(): MutableLiveData<Boolean> {
         return repository.getErrorStateLive()
     }
@@ -37,19 +42,19 @@ class MainViewModel : ViewModel() {
     fun setCurrentCategory(category:String){
         currentCategory.postValue(category)
     }
-    fun getScrollDownLoad(): Boolean {
-        return scrollDownLoad
+    fun getScrollDownLoad(): WhatDownLoad {
+        return repository.getScrollDown()
     }
-    fun setScrollDownLoad(bool:Boolean){
-        scrollDownLoad=bool
+    fun setScrollDownLoad(type:WhatDownLoad){
+        repository.setScrollDown(type)
     }
 
     fun getLastPos(): Int {
         return repository.getLastPos()
     }
-    fun testDownLoad(){
+    fun testDownLoad(afterScroll:Boolean){
         viewModelScope.launch {
-            repository.testDownLoad()
+            repository.testDownLoad(afterScroll)
         }
     }
 
@@ -59,15 +64,16 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun downLoadCategory(category:String){
+    fun downLoadCategory(afterScroll:Boolean){
         viewModelScope.launch {
-            repository.downLoadCategory(category)
+            repository.downLoadCategory(category, afterScroll)
         }
+
     }
 
-    fun downLoadSearch(search:String){
+    fun downLoadSearch(afterScroll:Boolean){
         viewModelScope.launch {
-            repository.downLoadSearch(search)
+            repository.downLoadSearch(searchQuery!!, afterScroll)
         }
     }
 

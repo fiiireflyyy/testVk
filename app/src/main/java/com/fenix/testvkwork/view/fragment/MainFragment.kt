@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fenix.testvkwork.databinding.FragmentMainBinding
+import com.fenix.testvkwork.model.WhatDownLoad
 import com.fenix.testvkwork.view.FilterAdapter
 import com.fenix.testvkwork.view.ProductsAdapter
 import com.fenix.testvkwork.viewModel.MainViewModel
@@ -33,7 +34,7 @@ class MainFragment : Fragment() {
         _binding=FragmentMainBinding.inflate(inflater,container,false)
 
         viewModel.downLoadFilters()
-        viewModel.testDownLoad()
+        viewModel.testDownLoad(false)
 
         filtersAdapter= FilterAdapter(viewModel)
         mBinding.filtersRecycler.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
@@ -63,8 +64,10 @@ class MainFragment : Fragment() {
                         Log.d("RRR", "позиция $lastVisibleItemPosition")
 
                         if (lastVisibleItemPosition >= viewModel.getLastPos()) {
-                            if(viewModel.getScrollDownLoad()){
-                                viewModel.testDownLoad()
+                            when(viewModel.getScrollDownLoad()){
+                                WhatDownLoad.MAIN->viewModel.testDownLoad(true)
+                                WhatDownLoad.CATEGORY->viewModel.downLoadCategory(true)
+                                WhatDownLoad.SEARCH->viewModel.downLoadSearch(true)
                             }
                             Log.d("RRR", "ПРОКРУТИЛОСЬ")
                         }
@@ -114,16 +117,16 @@ class MainFragment : Fragment() {
 
         mBinding.updateBtn.setOnClickListener {
             viewModel.downLoadFilters()
-            viewModel.testDownLoad()
+            viewModel.testDownLoad(false)
         }
 
 
         mBinding.deleteFilterBtn.setOnClickListener {
-            viewModel.testDownLoad()
+            viewModel.testDownLoad(false)
             viewModel.setShowBtnCancel(false)
             viewModel.setCurrentCategory("Выберите категорию")
             filtersAdapter.reDrawOut()
-            viewModel.setScrollDownLoad(true)
+            viewModel.setScrollDownLoad(WhatDownLoad.MAIN)
         }
 
 
@@ -132,14 +135,17 @@ class MainFragment : Fragment() {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     Log.d("RRR","ЗАПРОС $query")
                     if(query!=null) {
-                        viewModel.downLoadSearch(query)
+                        viewModel.setSearch(query)
+                        viewModel.downLoadSearch(false)
+                        viewModel.setScrollDownLoad(WhatDownLoad.SEARCH)
                     }
                     return true
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
                     if (newText==""){
-                        viewModel.testDownLoad()
+                        viewModel.testDownLoad(false)
+                        viewModel.setScrollDownLoad(WhatDownLoad.MAIN)
                     }
                     return true
                 }

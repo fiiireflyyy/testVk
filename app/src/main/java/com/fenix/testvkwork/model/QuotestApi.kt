@@ -9,12 +9,12 @@ interface QuotestApi {
     suspend fun getProducts(@Query("skip")skip:Int, @Query("limit")limit:Int):Products
 
     @GET("/products/category/{category}")
-    suspend fun getProducts(@Path("category")category:String):Products
+    suspend fun getProducts(@Path("category")category:String, @Query("skip")skip:Int, @Query("limit")limit:Int):Products
 
 
     @GET("/products/categories")
     suspend fun getFilters():ArrayList<String>
 
     @GET("/products/search")
-    suspend fun getSearchProducts(@Query("q")query:String):Products
+    suspend fun getSearchProducts(@Query("q")query:String, @Query("skip")skip:Int,@Query("limit")limit: Int):Products
 }
