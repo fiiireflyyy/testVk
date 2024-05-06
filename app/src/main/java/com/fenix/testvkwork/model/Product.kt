@@ -4,7 +4,7 @@ class Product(
     val id: Long,
     val title:String,
     val description:String,
-    val price:String,
+    val price:Double,
     val discountPercentage: Double,
     val rating:Double,
     val stock:Long,

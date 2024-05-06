@@ -1,6 +1,7 @@
 package com.fenix.testvkwork.view
 
 import android.annotation.SuppressLint
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,12 +32,13 @@ class ProductsAdapter:RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
         private val description=mBinding.description
         private val price=mBinding.price
         private val stock=mBinding.remainCount
-
+        private val rating=mBinding.rating
         fun onBind(items: Product){
             title.text=items.title
             description.text=items.description
-            price.text=items.price
+            price.text=items.price.toString()
             stock.text= items.stock.toString()
+            rating.text=items.rating.toString()
         }
 
     }
@@ -50,6 +52,16 @@ class ProductsAdapter:RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.onBind(productList[position])
+        holder.mBinding.price.paintFlags=Paint.STRIKE_THRU_TEXT_FLAG
+        holder.mBinding.price.apply {
+            text = "%.2f".format(productList[position].price )+"$"
+        }
+        holder.mBinding.afterDiscont.apply {
+            text = "%.2f".format(productList[position].price * (1 - productList[position].discountPercentage / 100))+"$"
+        }
+        holder.mBinding.discountPercent.apply {
+            text = "-%.2f".format(productList[position].discountPercentage)+"%"
+        }
         Glide.with(holder.itemView)
             .load(productList[position].thumbnail)
             .transform(RoundedCorners(20))
