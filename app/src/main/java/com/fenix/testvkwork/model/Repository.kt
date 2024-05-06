@@ -18,6 +18,9 @@ class Repository {
     private val toastError:MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
 
 
+    fun getChoiceProduct(pos:Int): Product {
+        return productsL[pos]
+    }
     fun getScrollDown(): WhatDownLoad {
         return scrollDownLoad
     }

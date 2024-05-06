@@ -9,9 +9,11 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.fenix.testvkwork.R
 import com.fenix.testvkwork.databinding.FragmentMainBinding
 import com.fenix.testvkwork.model.WhatDownLoad
 import com.fenix.testvkwork.view.FilterAdapter
@@ -33,8 +35,6 @@ class MainFragment : Fragment() {
     ): View {
         _binding=FragmentMainBinding.inflate(inflater,container,false)
 
-        viewModel.downLoadFilters()
-        viewModel.testDownLoad(false)
 
         filtersAdapter= FilterAdapter(viewModel)
         mBinding.filtersRecycler.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
@@ -48,7 +48,7 @@ class MainFragment : Fragment() {
         mBinding.filtersRecycler.adapter=filtersAdapter
 
 
-        productsAdapter= ProductsAdapter()
+        productsAdapter= ProductsAdapter(viewModel::setPosChoice,::navigateProduct)
         mBinding.productRecycler.layoutManager=GridLayoutManager(context,2)
 
         viewModel.getProductsLive().observe(
@@ -141,6 +141,7 @@ class MainFragment : Fragment() {
         mBinding.deleteFilterBtn.setOnClickListener {
             viewModel.testDownLoad(false)
             viewModel.setShowBtnCancel(false)
+            viewModel.currentPos=null
             viewModel.setCurrentCategory("Выберите категорию")
             filtersAdapter.reDrawOut()
             viewModel.setScrollDownLoad(WhatDownLoad.MAIN)
@@ -152,6 +153,7 @@ class MainFragment : Fragment() {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     Log.d("RRR","ЗАПРОС $query")
                     if(query!=null) {
+                        filtersAdapter.reDrawOut()
                         viewModel.setSearch(query)
                         viewModel.downLoadSearch(false)
                         viewModel.setScrollDownLoad(WhatDownLoad.SEARCH)
@@ -160,7 +162,10 @@ class MainFragment : Fragment() {
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    if (newText==""){
+                    if (newText=="" && viewModel.getSearch()!="" && viewModel.getSearch()!=null && viewModel.currentPos==null){
+                        mBinding.productRecycler.smoothScrollToPosition(0)
+                        viewModel.setSearch("")
+                        filtersAdapter.reDrawOut()
                         viewModel.testDownLoad(false)
                         viewModel.setScrollDownLoad(WhatDownLoad.MAIN)
                     }
@@ -169,7 +174,22 @@ class MainFragment : Fragment() {
 
             }
         )
+
+        viewModel.getScroll().observe(
+            viewLifecycleOwner,
+        ){
+            Log.d("WWW","MISTAKE")
+            if (it=="scroll")
+                mBinding.productRecycler.smoothScrollToPosition(0)
+        }
+
+
         return mBinding.root
+    }
+
+
+    fun navigateProduct(){
+        findNavController().navigate(R.id.action_mainFragment_to_productFragment)
     }
 
 

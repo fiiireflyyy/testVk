@@ -1,5 +1,6 @@
 package com.fenix.testvkwork.viewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,11 +17,39 @@ class MainViewModel : ViewModel() {
 
     private var searchQuery:String?=null
     var category=""
+    var currentPos:Int?=null
+    private var posChoiceProduct:Int?=0
     private val currentCategory:MutableLiveData<String> by lazy { MutableLiveData<String>() }
     private val showBtnCancel:MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
+    private val forScroll:MutableLiveData<String> by lazy { MutableLiveData<String>() }
+
+
+
+    init {
+        Log.d("RRR","INIT VIEW")
+        downLoadFilters()
+        testDownLoad(false)
+    }
+
+
+    fun setForScroll(flag:String){
+        forScroll.postValue(flag)
+    }
+    fun getScroll(): MutableLiveData<String> {
+        return forScroll
+    }
+    fun getChoiceProduct(): Product {
+        return repository.getChoiceProduct(posChoiceProduct!!)
+    }
+    fun setPosChoice(pos:Int){
+        posChoiceProduct=pos
+    }
 
     fun setSearch(search:String){
         searchQuery = search
+    }
+    fun getSearch(): String? {
+        return searchQuery
     }
     fun getErrorStateLive(): MutableLiveData<Boolean> {
         return repository.getErrorStateLive()
@@ -53,6 +82,10 @@ class MainViewModel : ViewModel() {
         return repository.getLastPos()
     }
     fun testDownLoad(afterScroll:Boolean){
+        Log.d("DDD","download")
+        if (!afterScroll){
+            forScroll.postValue("scroll")
+        }
         viewModelScope.launch {
             repository.testDownLoad(afterScroll)
         }
@@ -65,6 +98,10 @@ class MainViewModel : ViewModel() {
     }
 
     fun downLoadCategory(afterScroll:Boolean){
+        if (!afterScroll){
+            Log.d("DDD","filters")
+            forScroll.postValue("scroll")
+        }
         viewModelScope.launch {
             repository.downLoadCategory(category, afterScroll)
         }
@@ -72,6 +109,10 @@ class MainViewModel : ViewModel() {
     }
 
     fun downLoadSearch(afterScroll:Boolean){
+        if (!afterScroll){
+            Log.d("DDD","filters")
+            forScroll.postValue("scroll")
+        }
         viewModelScope.launch {
             repository.downLoadSearch(searchQuery!!, afterScroll)
         }

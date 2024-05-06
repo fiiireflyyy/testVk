@@ -2,6 +2,7 @@ package com.fenix.testvkwork.view
 
 import android.annotation.SuppressLint
 import android.graphics.Paint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +12,12 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.fenix.testvkwork.R
 import com.fenix.testvkwork.databinding.ItemProductBinding
 import com.fenix.testvkwork.model.Product
+import com.fenix.testvkwork.viewModel.MainViewModel
 
-class ProductsAdapter:RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
+class ProductsAdapter(
+    private val setChoicePos:(Int)->Unit,
+    private val navigateProduct:()->Unit,
+):RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
 
     var productList= listOf<Product>()
         @SuppressLint("NotifyDataSetChanged")
@@ -62,6 +67,12 @@ class ProductsAdapter:RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
         holder.mBinding.discountPercent.apply {
             text = "-%.2f".format(productList[position].discountPercentage)+"%"
         }
+
+        holder.mBinding.itemProduct.setOnClickListener {
+            setChoicePos(position)
+            navigateProduct()
+        }
+
         Glide.with(holder.itemView)
             .load(productList[position].thumbnail)
             .transform(RoundedCorners(20))

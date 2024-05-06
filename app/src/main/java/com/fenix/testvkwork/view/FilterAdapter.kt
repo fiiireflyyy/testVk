@@ -1,6 +1,7 @@
 package com.fenix.testvkwork.view
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,10 @@ class FilterAdapter(
 
     private var currentCategoryHolder:ViewHolder?=null
     private var currentPosition:Int?=null
+    init {
+        Log.d("RRR","ADAPTER")
+        currentPosition=viewModel.currentPos
+    }
 
 
     class ViewHolder(item: View):RecyclerView.ViewHolder(item){
@@ -57,13 +62,18 @@ class FilterAdapter(
         holder.onBind(filterList[position],position,currentPosition,holder)
         if(currentPosition==null)
             holder.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_bg)
+        if(currentPosition==position){
+            currentCategoryHolder=holder
+        }
+
         holder.mBinding.chipLayout.setOnClickListener {
-            if (currentCategoryHolder == holder && currentPosition==position){
+            if ( currentPosition==position){
                 viewModel.testDownLoad(false)
                 viewModel.setShowBtnCancel(false)
                 viewModel.setCurrentCategory("Выберите категорию")
                 holder.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_bg)
                 viewModel.setScrollDownLoad(WhatDownLoad.MAIN)
+                viewModel.currentPos=null
                 currentPosition=null
                 currentCategoryHolder=null
             } else {
@@ -72,6 +82,7 @@ class FilterAdapter(
                 viewModel.downLoadCategory(false)
                 viewModel.setShowBtnCancel(true)
                 reDrawOldButton(holder,position)
+                viewModel.currentPos=position
                 holder.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_on_bg)
                 viewModel.setScrollDownLoad(WhatDownLoad.CATEGORY)
             }
@@ -81,7 +92,11 @@ class FilterAdapter(
 
     fun reDrawOut(){
         currentPosition=null
-        currentCategoryHolder!!.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_bg)
+        viewModel.setShowBtnCancel(false)
+        viewModel.currentPos=null
+        viewModel.setCurrentCategory("Выберите категорию")
+        if(currentCategoryHolder!=null)
+            currentCategoryHolder!!.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_bg)
     }
     fun reDrawOldButton(holder: ViewHolder,position:Int){
         if (currentCategoryHolder != null){
