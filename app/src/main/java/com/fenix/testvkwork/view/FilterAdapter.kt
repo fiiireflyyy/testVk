@@ -55,8 +55,9 @@ class FilterAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.onBind(filterList[position],position,currentPosition,holder)
+        if(currentPosition==null)
+            holder.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_bg)
         holder.mBinding.chipLayout.setOnClickListener {
-
             if (currentCategoryHolder == holder && currentPosition==position){
                 viewModel.testDownLoad(false)
                 viewModel.setShowBtnCancel(false)
@@ -79,6 +80,7 @@ class FilterAdapter(
     }
 
     fun reDrawOut(){
+        currentPosition=null
         currentCategoryHolder!!.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_bg)
     }
     fun reDrawOldButton(holder: ViewHolder,position:Int){
