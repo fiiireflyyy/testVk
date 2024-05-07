@@ -12,6 +12,7 @@
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="#00FFFFFF"
         android:src="@drawable/baseline_arrow_back_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -87,6 +88,7 @@
         android:id="@+id/product_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:text="456"
         app:layout_constraintBottom_toBottomOf="@+id/product_code_text"
         app:layout_constraintStart_toEndOf="@+id/product_code_text"
@@ -106,6 +108,7 @@
         android:id="@+id/product_remain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:text="147"
         app:layout_constraintBottom_toBottomOf="@+id/product_remain_text"
         app:layout_constraintStart_toEndOf="@+id/product_remain_text"

@@ -39,14 +39,8 @@ class FilterAdapter(
             _binding=ItemFilterBinding.bind(item)
         }
         private val filterText=mBinding.chipText
-        fun onBind(items:String,position: Int,currentPosition:Int?,holder: ViewHolder){
+        fun onBind(items:String){
             filterText.text=items
-            if (position!=currentPosition){
-                holder.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_bg)
-            }
-            else{
-                holder.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_on_bg)
-            }
         }
 
     }
@@ -59,32 +53,36 @@ class FilterAdapter(
     override fun getItemCount()=filterList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(filterList[position],position,currentPosition,holder)
-        if(currentPosition==null)
-            holder.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_bg)
-        if(currentPosition==position){
+        holder.onBind(filterList[position])
+
+        if (currentPosition==position){
             currentCategoryHolder=holder
+            holder.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_on_bg)
         }
+        else{
+            holder.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_bg)
+        }
+
 
         holder.mBinding.chipLayout.setOnClickListener {
             if ( currentPosition==position){
+                viewModel.setScrollDownLoad(WhatDownLoad.MAIN)
                 viewModel.testDownLoad(false)
                 viewModel.setShowBtnCancel(false)
                 viewModel.setCurrentCategory("Выберите категорию")
                 holder.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_bg)
-                viewModel.setScrollDownLoad(WhatDownLoad.MAIN)
                 viewModel.currentPos=null
                 currentPosition=null
                 currentCategoryHolder=null
             } else {
                 viewModel.category=filterList[position]
                 viewModel.setCurrentCategory(filterList[position])
+                viewModel.setScrollDownLoad(WhatDownLoad.CATEGORY)
                 viewModel.downLoadCategory(false)
                 viewModel.setShowBtnCancel(true)
                 reDrawOldButton(holder,position)
                 viewModel.currentPos=position
                 holder.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_on_bg)
-                viewModel.setScrollDownLoad(WhatDownLoad.CATEGORY)
             }
 
         }
@@ -99,7 +97,7 @@ class FilterAdapter(
             currentCategoryHolder!!.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_bg)
     }
     fun reDrawOldButton(holder: ViewHolder,position:Int){
-        if (currentCategoryHolder != null){
+        if (currentCategoryHolder != null && currentPosition!=position){
             currentCategoryHolder!!.mBinding.chipLayout.setBackgroundResource(R.drawable.filter_bg)
         }
         currentCategoryHolder = holder

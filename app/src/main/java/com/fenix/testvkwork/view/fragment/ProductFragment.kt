@@ -40,7 +40,7 @@ class ProductFragment : Fragment() {
         mBinding.productRemain.text=product.stock.toString()
         mBinding.oldPrice.paintFlags=Paint.STRIKE_THRU_TEXT_FLAG
         mBinding.oldPrice.text=("%.2f".format(product.price)+"$")
-        mBinding.discountPercent.text=("-"+"%.2f".format(product.price)+"%")
+        mBinding.discountPercent.text=("-"+"%.2f".format(product.discountPercentage)+"%")
         mBinding.price.text=("%.2f".format(product.price*(1-product.discountPercentage/100))+" $")
         mBinding.description.text=product.description
 

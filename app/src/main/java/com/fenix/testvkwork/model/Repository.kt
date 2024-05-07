@@ -42,6 +42,7 @@ class Repository {
             if(!afterScroll){
                 oldSkip=skip
                 skip=0
+                productsLiveData.postValue(arrayListOf())
                 val products=quotestApi.getProducts(skip,limit)
                 productsL=products.products
                 productsLiveData.postValue(productsL)
@@ -82,6 +83,7 @@ class Repository {
             if (!afterScroll){
                 oldSkip=skip
                 skip=0
+                productsLiveData.postValue(arrayListOf())
                 val products=quotestApi.getProducts(category,skip,limit)
                 productsL=products.products
                 productsLiveData.postValue(productsL)
