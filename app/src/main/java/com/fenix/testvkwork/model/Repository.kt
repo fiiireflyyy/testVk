@@ -101,6 +101,7 @@ class Repository {
                 skip=oldSkip
             }
             toastError.postValue(true)
+            errorState.postValue(true)
         }
 
     }

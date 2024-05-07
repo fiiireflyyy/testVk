@@ -81,6 +81,18 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    fun afterErrorDownLoad(){
+        if (currentCategory.value=="Выберите категорию" || currentCategory.value==""){
+            viewModelScope.launch {
+                repository.testDownLoad(false)
+            }
+        }else{
+            viewModelScope.launch {
+                repository.downLoadCategory(category,false)
+            }
+        }
+    }
+
     fun downLoadFilters(){
         viewModelScope.launch {
             repository.downLoadFilters()

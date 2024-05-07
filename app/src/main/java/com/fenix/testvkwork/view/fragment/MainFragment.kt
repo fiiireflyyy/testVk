@@ -133,7 +133,7 @@ class MainFragment : Fragment() {
 
         mBinding.updateBtn.setOnClickListener {
             viewModel.downLoadFilters()
-            viewModel.testDownLoad(false)
+            viewModel.afterErrorDownLoad()
         }
 
 
