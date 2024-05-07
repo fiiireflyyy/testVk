@@ -1,4 +1,4 @@
-package com.fenix.testvkwork.model
+package com.fenix.testvkwork.model.Retrofit
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

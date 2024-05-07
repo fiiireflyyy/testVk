@@ -2,6 +2,8 @@ package com.fenix.testvkwork.model
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.fenix.testvkwork.model.Retrofit.QuotestApi
+import com.fenix.testvkwork.model.Retrofit.RetrofitHelper
 
 class Repository {
 
@@ -13,7 +15,7 @@ class Repository {
     private val productsLiveData:MutableLiveData<ArrayList<Product>> by lazy { MutableLiveData<ArrayList<Product>>() }
     private var productsL=ArrayList<Product>()
     private val filtersLiveData:MutableLiveData<ArrayList<String>> by lazy {MutableLiveData<ArrayList<String>>()}
-    private val quotestApi=RetrofitHelper.getInstance().create(QuotestApi::class.java)
+    private val quotestApi= RetrofitHelper.getInstance().create(QuotestApi::class.java)
     private val errorState:MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>()}
     private val toastError:MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
 

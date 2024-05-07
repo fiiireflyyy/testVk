@@ -2,8 +2,12 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.TestVkWork" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+         <item name="colorPrimary">@color/light_grey</item>
+
     </style>
 
     <style name="Theme.TestVkWork" parent="Base.Theme.TestVkWork" />
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="queryBackground">@null</item>
+    </style>
 </resources>

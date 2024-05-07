@@ -1,130 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".view.fragment.MainFragment">
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragment.MainFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/top_panel"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_panel"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/custom_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/search_bar"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:background="@drawable/custom_bg"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/welcome_text"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_view"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/welcome"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/white_search_bg"
+                app:iconifiedByDefault="false"
+                app:queryHint="Введите запрос"
+                style="@style/SearchViewStyle"
+                app:searchIcon="@drawable/search_vector" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/coordinator"
+        app:layout_constraintTop_toBottomOf="@+id/top_panel">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/search_bar"
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/welcome_text">
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:scrimVisibleHeightTrigger="32dp">
 
-                <androidx.appcompat.widget.SearchView
-                    android:id="@+id/search_view"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/white_search_bg"
-                    app:iconifiedByDefault="false"
-                    app:queryHint="Введите запрос"
-                    app:searchIcon="@drawable/search_vector" />
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/inside_lay">
 
-        <TextView
-            android:id="@+id/category_text"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:text="@string/categories"
-            android:layout_marginEnd="128dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/top_panel" />
+                    <TextView
+                        android:id="@+id/category_text"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/categories"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/current_filter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="Выберите категорию"
-        app:layout_constraintBottom_toBottomOf="@+id/category_text"
-        app:layout_constraintEnd_toStartOf="@+id/delete_filter_btn"
-        app:layout_constraintTop_toTopOf="@+id/category_text"
-        app:layout_constraintVertical_bias="1.0" />
+                    <TextView
+                        android:id="@+id/current_filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="Выберите категорию"
+                        app:layout_constraintBottom_toBottomOf="@+id/category_text"
+                        app:layout_constraintEnd_toStartOf="@+id/delete_filter_btn"
+                        app:layout_constraintTop_toTopOf="@+id/category_text"
+                        app:layout_constraintVertical_bias="1.0" />
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/filters_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="8dp"
-            android:clipToPadding="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/category_text" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/filters_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:layout_marginTop="8dp"
+                        android:clipToPadding="false"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/category_text" />
 
-        <TextView
-            android:id="@+id/product_text"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/product_txt"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/filters_recycler" />
+                    <ImageButton
+                        android:id="@+id/delete_filter_btn"
+                        android:visibility="gone"
+                        android:background="@drawable/white_bg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/baseline_cancel_24"
+                        app:layout_constraintBottom_toBottomOf="@+id/current_filter"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/current_filter" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/product_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="16dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_marginHorizontal="8dp"
-            android:paddingBottom="272dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/product_text" />
-
-
-    <ImageButton
-        android:id="@+id/delete_filter_btn"
-        android:visibility="gone"
-        android:background="@drawable/white_bg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/baseline_cancel_24"
-        app:layout_constraintBottom_toBottomOf="@+id/current_filter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/current_filter" />
+            android:paddingBottom="60dp" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/error_lay"
@@ -135,7 +130,7 @@
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/product_text"
+        app:layout_constraintTop_toBottomOf="@id/coordinator"
         android:background="@drawable/grey_bg"
         android:visibility="gone">
 
@@ -163,9 +158,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/error_text" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
