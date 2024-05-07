@@ -175,15 +175,6 @@ class MainFragment : Fragment() {
             }
         )
 
-        viewModel.getScroll().observe(
-            viewLifecycleOwner,
-        ){
-            Log.d("WWW","MISTAKE")
-            if (it=="scroll")
-                mBinding.productRecycler.smoothScrollToPosition(0)
-        }
-
-
         return mBinding.root
     }
 

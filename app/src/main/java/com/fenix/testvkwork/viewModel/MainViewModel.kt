@@ -21,7 +21,6 @@ class MainViewModel : ViewModel() {
     private var posChoiceProduct:Int?=0
     private val currentCategory:MutableLiveData<String> by lazy { MutableLiveData<String>() }
     private val showBtnCancel:MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
-    private val forScroll:MutableLiveData<String> by lazy { MutableLiveData<String>() }
 
 
 
@@ -32,12 +31,6 @@ class MainViewModel : ViewModel() {
     }
 
 
-    fun setForScroll(flag:String){
-        forScroll.postValue(flag)
-    }
-    fun getScroll(): MutableLiveData<String> {
-        return forScroll
-    }
     fun getChoiceProduct(): Product {
         return repository.getChoiceProduct(posChoiceProduct!!)
     }
@@ -83,9 +76,6 @@ class MainViewModel : ViewModel() {
     }
     fun testDownLoad(afterScroll:Boolean){
         Log.d("DDD","download")
-        if (!afterScroll){
-            forScroll.postValue("scroll")
-        }
         viewModelScope.launch {
             repository.testDownLoad(afterScroll)
         }
@@ -98,10 +88,6 @@ class MainViewModel : ViewModel() {
     }
 
     fun downLoadCategory(afterScroll:Boolean){
-        if (!afterScroll){
-            Log.d("DDD","filters")
-            forScroll.postValue("scroll")
-        }
         viewModelScope.launch {
             repository.downLoadCategory(category, afterScroll)
         }
@@ -109,10 +95,6 @@ class MainViewModel : ViewModel() {
     }
 
     fun downLoadSearch(afterScroll:Boolean){
-        if (!afterScroll){
-            Log.d("DDD","filters")
-            forScroll.postValue("scroll")
-        }
         viewModelScope.launch {
             repository.downLoadSearch(searchQuery!!, afterScroll)
         }

@@ -7,4 +7,6 @@
     <string name="product_txt">Товары</string>
     <string name="remain_txt">шт.</string>
     <string name="error_text"><![CDATA[Отсутствует соединение с интернетом, нажмите кнопку <обновить> когда подключитесь к сети]]></string>
+    <string name="product_code">Код товара: </string>
+    <string name="product_remain">Количество:</string>
 </resources>
