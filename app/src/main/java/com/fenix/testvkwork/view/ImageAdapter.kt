@@ -38,6 +38,7 @@ class ImageAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Glide.with(holder.itemView)
             .load(imageList[position])
+            .error(R.drawable.error_image)
             .transform(RoundedCorners(30))
             .placeholder(R.drawable.white_bg)
             .into(holder.mBinding.imageView)
