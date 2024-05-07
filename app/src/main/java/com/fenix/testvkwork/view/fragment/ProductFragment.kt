@@ -43,6 +43,7 @@ class ProductFragment : Fragment() {
         mBinding.discountPercent.text=("-"+"%.2f".format(product.discountPercentage)+"%")
         mBinding.price.text=("%.2f".format(product.price*(1-product.discountPercentage/100))+" $")
         mBinding.description.text=product.description
+        mBinding.brand.text=product.brand
 
         productImageAdapter=ImageAdapter(product.images)
         mBinding.imageRecycler.layoutManager=CarouselLayoutManager(HeroCarouselStrategy())
